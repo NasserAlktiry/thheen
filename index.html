@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ذهين | لعبة المسابقات</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="page-container">
+      <header class="main-header">
+        <h1>ذهين</h1>
+      </header>
+
+      <!-- رسائل فلاش -->
+      <div class="flash-container">
+        <div id="flash" class="flash hidden"></div>
+      </div>
+
+      <main>
+        <!-- شاشة تسجيل الدخول -->
+        <section id="login-screen" class="screen center-card hidden">
+          <h2>تسجيل الدخول</h2>
+          <form id="login-form" class="form-vertical">
+            <label>اسم المستخدم:</label>
+            <input type="text" id="username" required />
+
+            <label>كلمة المرور:</label>
+            <input type="password" id="password" required />
+
+            <p id="login-error" class="error-text"></p>
+
+            <button type="submit" class="btn primary">دخول</button>
+          </form>
+        </section>
+
+        <!-- شاشة إعداد عدد الفرق -->
+        <section id="teams-setup-screen" class="screen center-card hidden">
+          <h2>إعداد الفرق</h2>
+          <p>اختر عدد الفرق المتنافسة (من 2 إلى 6):</p>
+
+          <form id="teams-setup-form" class="form-vertical">
+            <input
+              type="number"
+              id="num-teams"
+              min="2"
+              max="6"
+              value="2"
+              required
+            />
+            <button type="submit" class="btn primary">التالي</button>
+          </form>
+
+          <button class="back-btn global-back-btn" type="button">رجوع</button>
+        </section>
+
+        <!-- شاشة إدخال أسماء الفرق -->
+        <section id="team-names-screen" class="screen center-card hidden">
+          <h2>أسماء الفرق</h2>
+          <p id="teams-count-label"></p>
+
+          <form id="team-names-form" class="form-vertical">
+            <div id="team-names-container"></div>
+            <button type="submit" class="btn primary">حفظ وبدء اللعبة</button>
+          </form>
+
+          <button class="back-btn global-back-btn" type="button">رجوع</button>
+        </section>
+
+        <!-- شاشة إعداد عدد الجولات -->
+       <section id="rounds-screen" class="screen hidden">
+  <div class="center-card">
+    <h2>إعداد الجولات</h2>
+
+    <form id="rounds-form" class="form-vertical">
+      <label>اختر عدد الجولات:</label>
+
+      <label><input type="radio" name="roundsMode" value="5" checked> 5 جولات</label>
+      <label><input type="radio" name="roundsMode" value="7"> 7 جولات</label>
+      <label><input type="radio" name="roundsMode" value="10"> 10 جولات</label>
+
+      <label>
+        <input type="radio" name="roundsMode" value="custom">
+        عدد مخصص:
+      </label>
+      <input id="rounds-custom" type="number" min="1" placeholder="اكتب عدد الجولات" />
+
+      <label><input type="radio" name="roundsMode" value="unlimited"> مفتوح (بدون حد)</label>
+
+      <button class="btn primary" type="submit">بدء اللعبة</button>
+    </form>
+  </div>
+</section>
+
+
+        <!-- شاشة تأكيد الفرق -->
+        <section id="teams-confirm-screen" class="screen center-card hidden">
+          <h2>الفرق المسجلة</h2>
+          <ul id="teams-list" class="teams-list"></ul>
+          <button id="start-game-btn" class="btn primary" type="button">
+            بدء المسابقة
+          </button>
+          <button class="back-btn global-back-btn" type="button">رجوع</button>
+        </section>
+
+        <!-- شريط النقاط -->
+        <section id="score-bar" class="hidden">
+          <div class="top-info">
+            <div class="scores-bar" id="scores-bar"></div>
+          </div>
+        </section>
+
+        <!-- ✅ شاشة التصنيفات (مفعّلة من البداية عشان تشوف قائمة الصدارة والأزرار) -->
+        <section id="categories-screen" class="screen">
+          <div class="top-info">
+            <h2 id="current-team-title">دور الفريق: -</h2>
+            <p>اختر نوع السؤال:</p>
+          </div>
+
+          <div class="categories-wrapper">
+            <!-- ✅ قائمة الصدارة -->
+            <aside id="leaderboard" class="leaderboard hidden">
+              <div class="leaderboard-title">قائمة الصدارة</div>
+
+              <ul id="leaderboard-list" class="leaderboard-list"></ul>
+
+              <div class="leaderboard-buttons">
+                <button id="store-btn" class="lb-btn" type="button">
+                  المتجر
+                </button>
+                <button id="features-btn" class="lb-btn" type="button">
+                  المميزات
+                </button>
+              </div>
+            </aside>
+
+            <!-- ✅ شبكة التصنيفات (واحدة فقط لا تكرر id) -->
+            <div class="grid-container" id="categories-grid"></div>
+          </div>
+
+          <div class="center-buttons">
+            <button id="show-results-btn" class="btn secondary" type="button">
+              إنهاء اللعبة وعرض النتائج
+            </button>
+          </div>
+        </section>
+
+        <!-- شاشة السؤال -->
+        <section id="question-screen" class="screen center-card wide hidden">
+          <h2 id="question-team-title">الفريق: -</h2>
+          <p id="question-meta">التصنيف: - | المستوى: - | النقاط: 0</p>
+
+          <div class="powerups-panel">
+            <div class="powerups-row">
+              <button type="button" id="pu-remove2" class="pu-btn">
+                🗑️ حذف خيارين
+              </button>
+              <button type="button" id="pu-freeze" class="pu-btn">
+                🕒 تجميد الوقت
+              </button>
+              <button type="button" id="pu-skip" class="pu-btn">
+                🔄 تغيير السؤال
+              </button>
+            </div>
+          </div>
+
+          <div class="inventory-row">
+            <div
+              class="inv-item clickable"
+              id="inv-electric-box"
+              title="كهرباء ⚡"
+            >
+              ⚡ <span id="inv-electric">0</span>
+            </div>
+            <div class="inv-item clickable" id="inv-pit-box" title="حفرة 🕳️">
+              🕳️ <span id="inv-pit">0</span>
+            </div>
+            <div class="inv-item" id="inv-shield-box" title="حمامة 🕊️">
+              🕊️ <span id="inv-shield">0</span>
+            </div>
+            <div class="inv-item clickable" id="inv-ban-box" title="حظر ⛔">
+              ⛔ <span id="inv-ban">0</span>
+            </div>
+          </div>
+
+          <div class="timer-container">
+            <div class="timer-label" id="timer-label">
+              الوقت المتبقي: 10 ثوانٍ
+            </div>
+            <div class="timer-bar-wrapper">
+              <div class="timer-bar" id="timer-bar"></div>
+            </div>
+          </div>
+
+          <div class="question-box" id="question-text">
+            هنا يظهر نص السؤال...
+          </div>
+
+          <form id="answers-form" class="answers-form">
+            <label class="answer-option">
+              <input type="radio" name="choice" value="A" required />
+              <span id="choice-A-text">A) ...</span>
+            </label>
+            <label class="answer-option">
+              <input type="radio" name="choice" value="B" />
+              <span id="choice-B-text">B) ...</span>
+            </label>
+            <label class="answer-option">
+              <input type="radio" name="choice" value="C" />
+              <span id="choice-C-text">C) ...</span>
+            </label>
+            <label class="answer-option">
+              <input type="radio" name="choice" value="D" />
+              <span id="choice-D-text">D) ...</span>
+            </label>
+
+            <button type="submit" class="btn primary">إرسال الإجابة</button>
+          </form>
+
+          <div class="feedback" id="feedback"></div>
+
+          <div class="center-buttons">
+            <button
+              id="next-question-btn"
+              class="btn secondary hidden"
+              type="button"
+            >
+              سؤال جديد
+            </button>
+          </div>
+        </section>
+
+        <!-- شاشة النتائج النهائية -->
+        <section id="results-screen" class="screen center-card hidden">
+          <h2>النتائج النهائية</h2>
+          <ol id="results-list" class="results-list"></ol>
+
+          <div class="center-buttons">
+            <button id="back-to-login-btn" class="btn secondary" type="button">
+              رجوع للصفحة الرئيسية
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+    <!-- ============ STORE MODAL ============ -->
+    <div id="store-modal" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop" data-close="store"></div>
+
+      <div class="modal-card">
+        <h2 class="modal-title">متجر القوة</h2>
+        <p id="store-team-label" class="modal-subtitle">
+          الفريق: - | الرصيد: 0 نقطة
+        </p>
+
+        <div class="modal-grid" id=id="store-modal-grid">
+          <!-- يتم تعبئته من الجافا -->
+        </div>
+
+
+        <button
+          type="button"
+          class="btn secondary modal-close"
+          data-close="store"
+        >
+          إغلاق
+        </button>
+      </div>
+    </div>
+
+    <!-- ============ FEATURES MODAL ============ -->
+    <section id="features-screen" class="screen hidden">
+  <div class="center-card wide">
+    <h2>المميزات</h2>
+    <div id="features-team-info" class="muted"></div>
+
+    <!-- شريط أفقي للمميزات اللي عند الفريق -->
+    <div id="features-bar" class="features-bar"></div>
+
+    <!-- تفاصيل الميزة المختارة -->
+    <div id="feature-panel" class="feature-panel hidden">
+      <div id="selected-feature-title" class="selected-feature-title"></div>
+      <div id="selected-feature-desc" class="muted"></div>
+
+      <!-- قائمة الفرق (تظهر فقط للمميزات اللي تحتاج خصم) -->
+      <div id="targets-wrap" class="targets-wrap hidden">
+        <div class="muted" style="margin-bottom:8px;">اختر الفريق المستهدف:</div>
+        <div id="targets-list" class="targets-list"></div>
+      </div>
+
+      <button id="activate-feature-btn" class="btn primary">تفعيل</button>
+      <div id="feature-limit-note" class="muted"></div>
+    </div>
+
+    <button id="back-from-features" class="btn secondary">رجوع</button>
+  </div>
+</section>
+
+      <section id="store-screen" class="screen hidden">
+        <div class="center-card wide">
+          <h2>المتجر</h2>
+          <div id="store-team-info" class="muted"></div>
+          <div id="store-grid" class="store-grid"></div>
+          <button id="back-from-store" class="btn secondary">رجوع</button>
+        </div>
+      </section>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

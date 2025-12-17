@@ -1119,6 +1119,29 @@ document.addEventListener("DOMContentLoaded", () => {
   backFromStore?.addEventListener("click", goToCategoriesScreen);
   backFromFeatures?.addEventListener("click", goToCategoriesScreen);
 
+  // =========================
+  // Simple Back Buttons
+  // =========================
+  document.getElementById("back-to-login")?.addEventListener("click", () => {
+    goToLoginScreen();
+  });
+
+  document
+    .getElementById("back-to-teams-setup")
+    ?.addEventListener("click", () => {
+      goToTeamsSetupScreen();
+    });
+
+  document
+    .getElementById("back-to-team-names")
+    ?.addEventListener("click", () => {
+      goToTeamNamesScreen();
+    });
+
+  document.getElementById("back-to-confirm")?.addEventListener("click", () => {
+    goToTeamsConfirmScreen();
+  });
+
   /* =========================
    17) RESULTS -> BACK
   ========================= */

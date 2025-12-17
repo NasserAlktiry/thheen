@@ -950,3 +950,229 @@ body {
     margin: 10px;
   }
 }
+
+/* ================== Back Buttons ================== */
+
+.back-btn {
+  appearance: none;
+  border: none;
+  outline: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 8px 18px;
+  border-radius: 999px;
+
+  font-family: "Cairo", system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  color: #ffd700;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.9));
+
+  border: 1px solid rgba(255, 215, 0, 0.45);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45),
+    inset 0 0 10px rgba(255, 215, 0, 0.08);
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease,
+    color 0.15s ease;
+}
+
+/* أيقونة السهم */
+.back-btn::before {
+  content: "←";
+  font-size: 18px;
+  font-weight: 900;
+  transition: transform 0.15s ease;
+}
+
+/* Hover */
+.back-btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.95),
+    rgba(255, 193, 7, 0.95)
+  );
+  color: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(255, 215, 0, 0.35);
+}
+
+/* Hover: حركة السهم */
+.back-btn:hover::before {
+  transform: translateX(-3px);
+}
+
+/* Active */
+.back-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* Disabled */
+.back-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ================== Feature Chips | Premium Colors ================== */
+
+/* الأساس */
+.feature-chip {
+  appearance: none;
+  border: none;
+  outline: none;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 18px;
+  border-radius: 999px;
+
+  font-family: "Cairo", system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  color: #f5f5f5;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 10, 14, 0.72),
+    rgba(0, 0, 0, 0.92)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.14);
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45),
+    inset 0 0 10px rgba(255, 255, 255, 0.06);
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease,
+    background 0.15s ease;
+}
+
+/* العدد */
+.feature-chip b {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 900;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Hover عام */
+.feature-chip:hover:not(.disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
+}
+
+/* Disabled */
+.feature-chip.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: grayscale(0.65);
+  box-shadow: none;
+}
+
+/* ===== ألوان حسب الميزة (هادية وفخمة) ===== */
+
+/* ⚡ كهرباء (Cyan) */
+.feature-chip[data-feature="electricity"] {
+  border-color: rgba(0, 210, 255, 0.35);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(0, 210, 255, 0.1) inset, 0 0 18px rgba(0, 210, 255, 0.12);
+}
+.feature-chip[data-feature="electricity"] b {
+  color: rgba(190, 245, 255, 0.95);
+  background: rgba(0, 210, 255, 0.12);
+  border-color: rgba(0, 210, 255, 0.2);
+}
+.feature-chip[data-feature="electricity"]:hover:not(.disabled) {
+  box-shadow: 0 14px 34px rgba(0, 210, 255, 0.14),
+    0 12px 28px rgba(0, 0, 0, 0.55);
+}
+
+/* 🕳️ حفرة (Purple) */
+.feature-chip[data-feature="pit"] {
+  border-color: rgba(168, 85, 247, 0.35);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(168, 85, 247, 0.1) inset, 0 0 18px rgba(168, 85, 247, 0.12);
+}
+.feature-chip[data-feature="pit"] b {
+  color: rgba(230, 210, 255, 0.95);
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.2);
+}
+.feature-chip[data-feature="pit"]:hover:not(.disabled) {
+  box-shadow: 0 14px 34px rgba(168, 85, 247, 0.14),
+    0 12px 28px rgba(0, 0, 0, 0.55);
+}
+
+/* ⛔ حظر (Red) */
+.feature-chip[data-feature="ban"] {
+  border-color: rgba(255, 80, 80, 0.35);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 80, 80, 0.09) inset, 0 0 18px rgba(255, 80, 80, 0.1);
+}
+.feature-chip[data-feature="ban"] b {
+  color: rgba(255, 210, 210, 0.95);
+  background: rgba(255, 80, 80, 0.12);
+  border-color: rgba(255, 80, 80, 0.2);
+}
+.feature-chip[data-feature="ban"]:hover:not(.disabled) {
+  box-shadow: 0 14px 34px rgba(255, 80, 80, 0.14),
+    0 12px 28px rgba(0, 0, 0, 0.55);
+}
+
+/* 🕊️ حمامة (Green) */
+.feature-chip[data-feature="shield"] {
+  border-color: rgba(80, 220, 140, 0.35);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(80, 220, 140, 0.09) inset, 0 0 18px rgba(80, 220, 140, 0.1);
+}
+.feature-chip[data-feature="shield"] b {
+  color: rgba(210, 255, 230, 0.95);
+  background: rgba(80, 220, 140, 0.12);
+  border-color: rgba(80, 220, 140, 0.2);
+}
+.feature-chip[data-feature="shield"]:hover:not(.disabled) {
+  box-shadow: 0 14px 34px rgba(80, 220, 140, 0.14),
+    0 12px 28px rgba(0, 0, 0, 0.55);
+}
+
+/* ================== Shake (رفض/تنبيه) ================== */
+@keyframes ui-shake {
+  0% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(-6px);
+  }
+  30% {
+    transform: translateX(6px);
+  }
+  45% {
+    transform: translateX(-5px);
+  }
+  60% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.shake {
+  animation: ui-shake 0.35s ease;
+}
